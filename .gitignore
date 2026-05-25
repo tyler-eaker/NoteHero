@@ -1,4 +1,16 @@
-external/fmod/
+# .gitignore
+
+# Build directories and IDE folders
 out/
+build/
 .vs/
+.vscode/
+
+# Visual Studio local CMake settings
+CMakeSettings.json
+
+# FMOD Proprietary SDK
+external/fmod/
+
+# Executables
 *.exe
