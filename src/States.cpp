@@ -3,6 +3,9 @@
 #include "raylib.h"
 
 // --- BootState ---
+// Splash screen. 'PRESS ANY BUTTON' type shit.
+// We should probably load everything when going into the menu state to ensure
+// the game starts up quickly. User settings should be loaded when booting though.
 BootState::BootState(Engine* engineContext) : engine(engineContext) {}
 void BootState::Enter() {}
 void BootState::Update() {}
@@ -15,10 +18,7 @@ void BootState::Draw() {
 
     ImGui::Begin("Note Hero");
 
-    ImGui::Text("Splash screen. 'PRESS ANY BUTTON' type shit.");
-    ImGui::Text("We should probably load everything when going into the menu state to ensure");
-    ImGui::Text("the game starts up quickly. User settings should be loaded when booting though.");
-    if (ImGui::Button("START")) {
+    if (ImGui::Button("START", ImVec2(200, 50))) {
         engine->ChangeState(std::make_unique<MenuState>(engine));
     }
 
@@ -43,22 +43,22 @@ void MenuState::Draw() {
         case MenuScreen::Main:
             DrawText("MAIN MENU", 20, 125, 20, GREEN);
 
-            if (ImGui::Button("QUICKPLAY")) {
+            if (ImGui::Button("QUICKPLAY", ImVec2(200, 50))) {
                 chosenGameMode = GameMode::Quickplay;
                 currentScreen = MenuScreen::SongSelect;
             }
-            if (ImGui::Button("VERSUS")) {
+            if (ImGui::Button("VERSUS", ImVec2(200, 50))) {
                 chosenGameMode = GameMode::Versus;
                 currentScreen = MenuScreen::SongSelect;
             }
-            if (ImGui::Button("ONLINE")) currentScreen = MenuScreen::Online;
-            if (ImGui::Button("PRACTICE")) {
+            if (ImGui::Button("ONLINE", ImVec2(200, 50))) currentScreen = MenuScreen::Online;
+            if (ImGui::Button("PRACTICE", ImVec2(200, 50))) {
                 chosenGameMode = GameMode::Practice;
                 currentScreen = MenuScreen::SongSelect;
             }
-            if (ImGui::Button("NEWS")) currentScreen = MenuScreen::News;
-            if (ImGui::Button("SETTINGS")) currentScreen = MenuScreen::Settings;
-            if (ImGui::Button("QUIT")) engine->Quit();
+            if (ImGui::Button("NEWS", ImVec2(200, 50))) currentScreen = MenuScreen::News;
+            if (ImGui::Button("SETTINGS", ImVec2(200, 50))) currentScreen = MenuScreen::Settings;
+            if (ImGui::Button("QUIT", ImVec2(200, 50))) engine->Quit();
 
             break;
 
@@ -70,10 +70,10 @@ void MenuState::Draw() {
             if (chosenGameMode == GameMode::Practice)
                 DrawText("SONG SELECT: PRACTICE", 20, 125, 20, GREEN);
 
-            if (ImGui::Button("SONG 1")) currentScreen = MenuScreen::PreGame;
-            if (ImGui::Button("SONG 2")) currentScreen = MenuScreen::PreGame;
-            if (ImGui::Button("SONG 3")) currentScreen = MenuScreen::PreGame;
-            if (ImGui::Button("GO BACK")) currentScreen = MenuScreen::Main;
+            if (ImGui::Button("SONG 1", ImVec2(200, 50))) currentScreen = MenuScreen::PreGame;
+            if (ImGui::Button("SONG 2", ImVec2(200, 50))) currentScreen = MenuScreen::PreGame;
+            if (ImGui::Button("SONG 3", ImVec2(200, 50))) currentScreen = MenuScreen::PreGame;
+            if (ImGui::Button("GO BACK", ImVec2(200, 50))) currentScreen = MenuScreen::Main;
 
             break;
 
@@ -81,7 +81,7 @@ void MenuState::Draw() {
             DrawText("ONLINE", 20, 125, 20, GREEN);
 
             ImGui::Text("Servers and shit");
-            if (ImGui::Button("GO BACK")) currentScreen = MenuScreen::Main;
+            if (ImGui::Button("GO BACK", ImVec2(200, 50))) currentScreen = MenuScreen::Main;
 
             break;
 
@@ -89,7 +89,7 @@ void MenuState::Draw() {
             DrawText("NEWS", 20, 125, 20, GREEN);
 
             ImGui::Text("News and shit");
-            if (ImGui::Button("GO BACK")) currentScreen = MenuScreen::Main;
+            if (ImGui::Button("GO BACK", ImVec2(200, 50))) currentScreen = MenuScreen::Main;
 
             break;
 
@@ -97,16 +97,17 @@ void MenuState::Draw() {
             DrawText("SETTINGS", 20, 125, 20, GREEN);
 
             ImGui::Text("Settings and shit");
-            if (ImGui::Button("GO BACK")) currentScreen = MenuScreen::Main;
+            if (ImGui::Button("GO BACK", ImVec2(200, 50))) currentScreen = MenuScreen::Main;
 
             break;
 
         case MenuScreen::PreGame:
             DrawText("PRE-GAME", 20, 125, 20, GREEN);
 
-            ImGui::Text("Changing difficulty, instrument, etc.");
-            if (ImGui::Button("PLAY")) engine->ChangeState(std::make_unique<GameplayState>(engine));
-            if (ImGui::Button("GO BACK")) currentScreen = MenuScreen::SongSelect;
+            ImGui::Text("Changing difficulty,");
+            ImGui::Text("instrument, etc.");
+            if (ImGui::Button("PLAY", ImVec2(200, 50))) engine->ChangeState(std::make_unique<GameplayState>(engine));
+            if (ImGui::Button("GO BACK", ImVec2(200, 50))) currentScreen = MenuScreen::SongSelect;
 
             break;
     }
@@ -129,10 +130,10 @@ void GameplayState::Draw() {
 
     ImGui::Begin("Note Hero");
 
-    if (ImGui::Button("FINISH SONG")) {
+    if (ImGui::Button("FINISH SONG", ImVec2(200, 50))) {
         engine->ChangeState(std::make_unique<ResultsState>(engine, 69420));
     }
-    if (ImGui::Button("QUIT")) {
+    if (ImGui::Button("QUIT", ImVec2(200, 50))) {
         engine->ChangeState(std::make_unique<MenuState>(engine));
     }
 
@@ -154,7 +155,7 @@ void ResultsState::Draw() {
     ImGui::Begin("Note Hero");
 
     ImGui::Text("Score: %d", score);
-    if (ImGui::Button("MAIN MENU")) {
+    if (ImGui::Button("MAIN MENU", ImVec2(200, 50))) {
         engine->ChangeState(std::make_unique<MenuState>(engine));
     }
     ImGui::End();

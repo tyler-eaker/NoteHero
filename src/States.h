@@ -3,6 +3,8 @@
 #include "GameState.h"
 #include "Engine.h"
 
+#include <optional>
+
 class Engine;
 
 class BootState : public GameState 
@@ -29,7 +31,7 @@ enum class MenuScreen {
 };
 
 enum class GameMode { 
-    Quickplay, 
+    Quickplay,
     Versus, 
     Online, 
     Practice 
@@ -49,8 +51,7 @@ private:
     Engine* engine;
 
     MenuScreen currentScreen = MenuScreen::Main;
-
-    GameMode chosenGameMode;
+    std::optional<GameMode> chosenGameMode = std::nullopt;
 };
 
 class GameplayState : public GameState 
