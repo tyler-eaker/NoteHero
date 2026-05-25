@@ -28,6 +28,13 @@ enum class MenuScreen {
     PreGame
 };
 
+enum class GameMode { 
+    Quickplay, 
+    Versus, 
+    Online, 
+    Practice 
+};
+
 class MenuState : public GameState 
 {
 public:
@@ -42,6 +49,8 @@ private:
     Engine* engine;
 
     MenuScreen currentScreen = MenuScreen::Main;
+
+    GameMode chosenGameMode;
 };
 
 class GameplayState : public GameState 
@@ -72,5 +81,6 @@ public:
 
 private:
     Engine* engine;
+
     int score = 0;
 };

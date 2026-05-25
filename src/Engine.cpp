@@ -9,8 +9,8 @@ Engine::Engine() : isRunning(true), audioSystem(nullptr)
     SetTraceLogLevel(LOG_NONE);
     spdlog::info("Booting Note Hero...");
 
-    InitWindow(1280, 720, "Note Hero");
-    SetTargetFPS(60);
+    InitWindow(GetDefaultVideoSettings().windowWidth, GetDefaultVideoSettings().windowHeight, GetWindowInfo().title);
+    SetTargetFPS(GetDefaultVideoSettings().targetFPS);
 
     FMOD_RESULT result = FMOD::System_Create(&audioSystem);
     if (result == FMOD_OK) {
