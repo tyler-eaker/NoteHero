@@ -44,19 +44,22 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(spdlog)
 
-add_executable(${PROJECT_NAME} src/main.cpp)
-
-if(MSVC)
-    target_compile_options(${PROJECT_NAME} PRIVATE /W4)
-endif()
+add_executable(${PROJECT_NAME})
 
 target_sources(${PROJECT_NAME} PRIVATE
+    src/main.cpp
+    src/Engine.cpp
+    src/States.cpp
     ${imgui_SOURCE_DIR}/imgui.cpp
     ${imgui_SOURCE_DIR}/imgui_draw.cpp
     ${imgui_SOURCE_DIR}/imgui_tables.cpp
     ${imgui_SOURCE_DIR}/imgui_widgets.cpp
     ${rlimgui_SOURCE_DIR}/rlImGui.cpp
 )
+
+if(MSVC)
+    target_compile_options(${PROJECT_NAME} PRIVATE /W4)
+endif()
 
 target_include_directories(${PROJECT_NAME} PRIVATE
     src

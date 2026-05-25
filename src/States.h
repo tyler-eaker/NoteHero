@@ -1,0 +1,76 @@
+#pragma once
+
+#include "GameState.h"
+#include "Engine.h"
+
+class Engine;
+
+class BootState : public GameState 
+{
+public:
+    BootState(Engine* engineContext);
+
+    void Enter() override;
+    void Update() override;
+    void Draw() override;
+    void Exit() override;
+
+private:
+    Engine* engine;
+};
+
+enum class MenuScreen {
+    Main,
+    SongSelect,
+    Online,
+    News,
+    Settings,
+    PreGame
+};
+
+class MenuState : public GameState 
+{
+public:
+    MenuState(Engine* engineContext);
+
+    void Enter() override;
+    void Update() override;
+    void Draw() override;
+    void Exit() override;
+
+private:
+    Engine* engine;
+
+    MenuScreen currentScreen = MenuScreen::Main;
+};
+
+class GameplayState : public GameState 
+{
+public:
+    GameplayState(Engine* engineContext);
+
+    void Enter() override;
+    void Update() override;
+    void Draw() override;
+    void Exit() override;
+
+private:
+    Engine* engine;
+
+    // The Simulation and Presentation layers will eventually be instantiated here
+};
+
+class ResultsState : public GameState 
+{
+public:
+    ResultsState(Engine* engineContext, int finalScore);
+
+    void Enter() override;
+    void Update() override;
+    void Draw() override;
+    void Exit() override;
+
+private:
+    Engine* engine;
+    int score = 0;
+};
