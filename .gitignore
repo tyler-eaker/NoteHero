@@ -1,2 +1,4 @@
-/.vs
-/out
+external/fmod/
+out/
+.vs/
+*.exe
