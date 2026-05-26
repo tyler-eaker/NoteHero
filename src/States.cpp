@@ -10,7 +10,7 @@ void BootState::Update() {}
 void BootState::Draw() {
     DrawTextEx(engine->GetMainFont(), "NOTE HERO", { 20, 10 }, 70, 2, WHITE);
     DrawTextEx(engine->GetMainFont(), "Pre-Alpha", { 20, 80 }, 20, 2, GRAY);
-    DrawRectangle(0, 110, 1280, 2, SKYBLUE);
+    DrawRectangle(0, 110, 1280, 2, BLUE);
     DrawTextEx(engine->GetMainFont(), "BOOT MENU", { 20, 125 }, 20, 2, GREEN);
 
     ImGui::Begin("Note Hero");
