@@ -6,7 +6,7 @@ struct WindowInfo {
 struct DefaultVideoSettings {
     int windowWidth = 1280;
     int windowHeight = 720;
-    int targetFPS = 60;
+    int targetFPS = 9999;
 };
 
 // All game settings will go here, eventually we need to setup config files to fetch from.

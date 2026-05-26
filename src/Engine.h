@@ -4,6 +4,7 @@
 #include "GameState.h"
 #include "EngineInfo.h"
 #include "fmod.hpp"
+#include "raylib.h"
 
 class Engine {
 public:
@@ -18,6 +19,8 @@ public:
     DefaultVideoSettings& GetDefaultVideoSettings() { return defaultVideoSettings; }
     FMOD::System* GetAudioSystem() { return audioSystem; }
 
+    Font GetMainFont() const { return mainFont; }
+
 private:
     std::unique_ptr<GameState> currentState;
     std::unique_ptr<GameState> nextState;
@@ -26,4 +29,6 @@ private:
     DefaultVideoSettings defaultVideoSettings;
     FMOD::System* audioSystem;
     bool isRunning;
+
+    Font mainFont;
 };

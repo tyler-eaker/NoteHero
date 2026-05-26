@@ -1,6 +1,5 @@
 #include "Engine.h"
 #include "States.h"
-#include "raylib.h"
 #include "rlImGui.h"
 #include "spdlog/spdlog.h"
 
@@ -11,6 +10,9 @@ Engine::Engine() : isRunning(true), audioSystem(nullptr)
 
     InitWindow(GetDefaultVideoSettings().windowWidth, GetDefaultVideoSettings().windowHeight, GetWindowInfo().title);
     SetTargetFPS(GetDefaultVideoSettings().targetFPS);
+
+    mainFont = LoadFontEx("assets/fonts/Michroma-Regular.ttf", 64, NULL, 0);
+    SetTextureFilter(mainFont.texture, TEXTURE_FILTER_BILINEAR);
 
     FMOD_RESULT result = FMOD::System_Create(&audioSystem);
     if (result == FMOD_OK) {
@@ -32,6 +34,8 @@ Engine::~Engine()
     if (audioSystem) {
         audioSystem->release();
     }
+
+    UnloadFont(mainFont);
 
     CloseWindow();
     spdlog::info("Note Hero shut down safely.");

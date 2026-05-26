@@ -3,6 +3,7 @@
 #include "GameState.h"
 #include "Engine.h"
 #include "AudioClock.h"
+#include "raylib.h"
 
 #include <optional>
 
