@@ -48,6 +48,7 @@ add_executable(${PROJECT_NAME})
 
 target_sources(${PROJECT_NAME} PRIVATE
     src/main.cpp
+    src/AudioClock.cpp
     src/Engine.cpp
     src/States.cpp
     ${imgui_SOURCE_DIR}/imgui.cpp
@@ -88,4 +89,8 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
     "${FMOD_DLL}"
     "$<TARGET_FILE_DIR:${PROJECT_NAME}>"
+
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    "${CMAKE_CURRENT_SOURCE_DIR}/assets"
+    "$<TARGET_FILE_DIR:${PROJECT_NAME}>/assets"
 )

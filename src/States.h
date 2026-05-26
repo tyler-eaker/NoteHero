@@ -2,10 +2,12 @@
 
 #include "GameState.h"
 #include "Engine.h"
+#include "AudioClock.h"
 
 #include <optional>
 
 class Engine;
+class AudioClock;
 
 class BootState : public GameState 
 {
@@ -67,7 +69,7 @@ public:
 private:
     Engine* engine;
 
-    // The Simulation and Presentation layers will eventually be instantiated here
+    std::unique_ptr<AudioClock> audioClock;
 };
 
 class ResultsState : public GameState 

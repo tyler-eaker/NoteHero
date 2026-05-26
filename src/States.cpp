@@ -1,6 +1,7 @@
 #include "States.h"
 #include "imgui.h"
 #include "raylib.h"
+#include "AudioClock.h"
 
 // --- BootState ---
 // Splash screen. 'PRESS ANY BUTTON' type shit.
@@ -119,8 +120,18 @@ void MenuState::Exit() {}
 
 // --- GameplayState ---
 GameplayState::GameplayState(Engine* engineContext) : engine(engineContext) {}
-void GameplayState::Enter() {}
-void GameplayState::Update() {}
+void GameplayState::Enter() {
+    audioClock = std::make_unique<AudioClock>(engine->GetAudioSystem());
+    audioClock->LoadSong("assets/songs/lil-pump-d-rose.wav");
+    audioClock->Play();
+}
+void GameplayState::Update() {
+    audioClock->Update();
+
+    if (audioClock->IsFinished()) {
+        engine->ChangeState(std::make_unique<ResultsState>(engine, 69420));
+    }
+}
 void GameplayState::Draw() {
 
     DrawText("NOTE HERO", 20, 20, 60, BLUE);
@@ -130,8 +141,23 @@ void GameplayState::Draw() {
 
     ImGui::Begin("Note Hero");
 
+    ImGui::Text("Song Time: %u ms", audioClock->GetSongPositionMs());
+    ImGui::Text("Track Length: %u ms", audioClock->GetTrackLengthMs());
     if (ImGui::Button("FINISH SONG", ImVec2(200, 50))) {
+        audioClock->Stop();
         engine->ChangeState(std::make_unique<ResultsState>(engine, 69420));
+    }
+    if (ImGui::Button("PLAY", ImVec2(200, 50))) {
+        audioClock->Play();
+    }
+    if (ImGui::Button("PAUSE", ImVec2(200, 50))) {
+        audioClock->Pause();
+    }
+    if (ImGui::Button("RESUME", ImVec2(200, 50))) {
+        audioClock->Resume();
+    }
+    if (ImGui::Button("STOP", ImVec2(200, 50))) {
+        audioClock->Stop();
     }
     if (ImGui::Button("QUIT", ImVec2(200, 50))) {
         engine->ChangeState(std::make_unique<MenuState>(engine));
