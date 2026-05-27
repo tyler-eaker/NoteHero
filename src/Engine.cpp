@@ -34,17 +34,25 @@ Engine::Engine() : isRunning(true), audioSystem(nullptr), audioClock(nullptr)
     ChangeState(std::make_unique<BootState>(this));
 }
 
-Engine::~Engine() 
+Engine::~Engine()
 {
+    inputManager.reset();
+
     rlImGuiShutdown();
+
+    currentState.reset();
+    nextState.reset();
+
+    audioClock.reset();
 
     if (audioSystem) {
         audioSystem->release();
+        audioSystem = nullptr;
     }
 
     UnloadFont(mainFont);
-
     CloseWindow();
+
     spdlog::info("Note Hero shut down safely.");
 }
 
