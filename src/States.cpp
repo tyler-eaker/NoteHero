@@ -1,7 +1,9 @@
 #include "States.h"
 #include "imgui.h"
 #include "raylib.h"
+#include "spdlog/spdlog.h"
 #include "AudioClock.h"
+#include "InputManager.h"
 
 // --- BootState ---
 BootState::BootState(Engine* engineContext) : engine(engineContext) {}
@@ -99,9 +101,8 @@ void MenuState::Draw() {
 void MenuState::Exit() {}
 
 // --- GameplayState ---
-GameplayState::GameplayState(Engine* engineContext, std::shared_ptr<AudioClock> ptrAudioClock)
-: engine(engineContext),
-  audioClock(ptrAudioClock) {}
+GameplayState::GameplayState(Engine* engineContext, AudioClock* ptrAudioClock)
+    : engine(engineContext), audioClock(ptrAudioClock) {}
 
 void GameplayState::Enter() {
     
@@ -110,8 +111,19 @@ void GameplayState::Enter() {
 }
 void GameplayState::Update() {
     audioClock->Update();
-    if (audioClock->IsFinished()) {
-        engine->ChangeState(std::make_unique<ResultsState>(engine, 69420));
+    std::vector<InputEvent> frameInputs = engine->GetInputManager()->PopAllEvents();
+
+    for (const auto& event : frameInputs) {
+        std::string logLine = std::format("Btn: {} | State: {} | Time: {}ms",
+            event.buttonID,
+            (event.isPressed ? "DOWN" : "UP  "),
+            event.timestamp);
+
+        inputHistory.push_back(logLine);
+
+        if (inputHistory.size() > 15) {
+            inputHistory.erase(inputHistory.begin());
+        }
     }
 }
 void GameplayState::Draw() {
@@ -123,6 +135,13 @@ void GameplayState::Draw() {
     ImGui::Begin("Note Hero");
     ImGui::Text("Song Time: %u ms", audioClock->GetSongPositionMs());
     ImGui::Text("Track Length: %u ms", audioClock->GetTrackLengthMs());
+    ImGui::Text("Live Key State:");
+    ImGui::Separator();
+    ImGui::Text("Ring Buffer History:");
+    for (const auto& log : inputHistory) {
+        ImGui::Text("%s", log.c_str());
+    }
+    if (IsKeyDown(KEY_X)) ImGui::Button(" X ", ImVec2(50, 50));
     if (ImGui::Button("FINISH SONG", ImVec2(200, 50))) {
         audioClock->Stop();
         engine->ChangeState(std::make_unique<ResultsState>(engine, 69420));

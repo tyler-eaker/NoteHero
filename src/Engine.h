@@ -21,7 +21,7 @@ public:
     WindowInfo& GetWindowInfo() { return windowInfo; }
     DefaultVideoSettings& GetDefaultVideoSettings() { return defaultVideoSettings; }
     FMOD::System* GetAudioSystem() { return audioSystem; }
-    std::shared_ptr<AudioClock> GetAudioClock() { return audioClock; }
+    AudioClock* GetAudioClock() { return audioClock.get(); }
     InputManager* GetInputManager() { return inputManager.get(); }
 
     Font GetMainFont() const { return mainFont; }
@@ -33,7 +33,7 @@ private:
     WindowInfo windowInfo;
     DefaultVideoSettings defaultVideoSettings;
     FMOD::System* audioSystem;
-    std::shared_ptr<AudioClock> audioClock;
+    std::unique_ptr<AudioClock> audioClock;
     std::unique_ptr<InputManager> inputManager;
     
     bool isRunning;

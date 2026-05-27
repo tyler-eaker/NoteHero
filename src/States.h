@@ -6,9 +6,8 @@
 #include "raylib.h"
 
 #include <optional>
-
-class Engine;
-class AudioClock;
+#include <vector>
+#include <string>
 
 class BootState : public GameState 
 {
@@ -60,7 +59,7 @@ private:
 class GameplayState : public GameState 
 {
 public:
-    GameplayState(Engine* engineContext, std::shared_ptr<AudioClock> ptrAudioClock);
+    GameplayState(Engine* engineContext, AudioClock* ptrAudioClock);
 
     void Enter() override;
     void Update() override;
@@ -69,7 +68,9 @@ public:
 
 private:
     Engine* engine;
-    std::shared_ptr<AudioClock> audioClock;
+    AudioClock* audioClock;
+
+    std::vector<std::string> inputHistory;
 };
 
 class ResultsState : public GameState 

@@ -1,15 +1,11 @@
 #pragma once
 
+#include <vector>
 #include <chrono>
-#include <tuple>
-#include <queue>
 #include <thread>
-#include <set>
-#include "Engine.h"
-// Fix a compile collision between raylib and windows
-//#define CloseWindow RlCloseWindow
-//#define ShowCursor RlShowCursor
-//#include <windows.h>
+#include <atomic>
+
+class Engine;
 
 struct InputEvent {
     int buttonID;
@@ -17,20 +13,26 @@ struct InputEvent {
     uint32_t timestamp;
 };
 
+constexpr size_t INPUT_BUFFER_SIZE = 1024;
+
 class InputManager {
 public:
     InputManager(Engine* engineContext);
     ~InputManager();
 
-    //void StartThread();
+    void StartThread();
     
+    std::vector<InputEvent> PopAllEvents();
 
 private:
     Engine* engine;
-    //std::shared_ptr<AudioClock> audioClock;
-    bool killThread { false };  
+    std::atomic<bool> killThread{ false };
     std::thread inputThread;
-    std::queue<InputEvent> inputQueue;
+
+    InputEvent ringBuffer[INPUT_BUFFER_SIZE];
+
+    std::atomic<size_t> head { 0 };
+    std::atomic<size_t> tail{ 0 };
 
     void ThreadHandleInputs();
 };

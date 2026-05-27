@@ -23,9 +23,11 @@ Engine::Engine() : isRunning(true), audioSystem(nullptr), audioClock(nullptr)
         spdlog::error("FMOD failed to initialize!");
     }
 
-    audioClock = std::make_shared<AudioClock>(audioSystem);
+    audioClock = std::make_unique<AudioClock>(audioSystem);
     
     inputManager = std::make_unique<InputManager>(this);
+
+    inputManager->StartThread();
 
     rlImGuiSetup(true);
 

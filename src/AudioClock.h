@@ -27,8 +27,8 @@ private:
     FMOD::Sound* track;
     FMOD::Channel* channel;
 
-    unsigned int currentPositionMs;
-    unsigned int trackLengthMs;
+    uint32_t currentPositionMs;
+    uint32_t trackLengthMs;
     bool isPlaying;
     bool isFinished;
 };
