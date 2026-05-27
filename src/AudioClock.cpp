@@ -3,7 +3,7 @@
 
 AudioClock::AudioClock(FMOD::System* audioSystemContext)
 	: system(audioSystemContext), track(nullptr), channel(nullptr),
-	currentPositionMs(0), trackLengthMs(0), isPlaying(false) {}
+	currentPositionMs(0), trackLengthMs(0), isPlaying(false), isFinished(false) {}
 
 AudioClock::~AudioClock() {
 	if (track) {

@@ -60,7 +60,7 @@ private:
 class GameplayState : public GameState 
 {
 public:
-    GameplayState(Engine* engineContext);
+    GameplayState(Engine* engineContext, std::shared_ptr<AudioClock> ptrAudioClock);
 
     void Enter() override;
     void Update() override;
@@ -69,8 +69,7 @@ public:
 
 private:
     Engine* engine;
-
-    std::unique_ptr<AudioClock> audioClock;
+    std::shared_ptr<AudioClock> audioClock;
 };
 
 class ResultsState : public GameState 

@@ -2,7 +2,7 @@
 
 
 
-* Engine - master clock
+* ~~Engine - master clock~~
 * Engine - input manager
 * Engine - asset manager
 * Gameplay - .chart file parser

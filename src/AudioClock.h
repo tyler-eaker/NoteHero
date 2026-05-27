@@ -16,8 +16,8 @@ public:
 
     void Update();
 
-    unsigned int GetSongPositionMs() const;
-    unsigned int GetTrackLengthMs() const;
+    uint32_t GetSongPositionMs() const;
+    uint32_t GetTrackLengthMs() const;
 
     bool IsPlaying() const;
     bool IsFinished() const;

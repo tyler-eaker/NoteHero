@@ -90,7 +90,7 @@ void MenuState::Draw() {
         DrawTextEx(engine->GetMainFont(), "PRE-GAME", { 20, 125 }, 20, 2, GREEN);
         ImGui::Text("Changing difficulty,");
         ImGui::Text("instrument, etc.");
-        if (ImGui::Button("PLAY", ImVec2(200, 50))) engine->ChangeState(std::make_unique<GameplayState>(engine));
+        if (ImGui::Button("PLAY", ImVec2(200, 50))) engine->ChangeState(std::make_unique<GameplayState>(engine, engine->GetAudioClock()));
         if (ImGui::Button("GO BACK", ImVec2(200, 50))) currentScreen = MenuScreen::SongSelect;
         break;
     }
@@ -99,9 +99,12 @@ void MenuState::Draw() {
 void MenuState::Exit() {}
 
 // --- GameplayState ---
-GameplayState::GameplayState(Engine* engineContext) : engine(engineContext) {}
+GameplayState::GameplayState(Engine* engineContext, std::shared_ptr<AudioClock> ptrAudioClock)
+: engine(engineContext),
+  audioClock(ptrAudioClock) {}
+
 void GameplayState::Enter() {
-    audioClock = std::make_unique<AudioClock>(engine->GetAudioSystem());
+    
     audioClock->LoadSong("assets/songs/lil-pump-d-rose.wav");
     audioClock->Play();
 }

@@ -2,8 +2,9 @@
 #include "States.h"
 #include "rlImGui.h"
 #include "spdlog/spdlog.h"
+#include "InputManager.h"
 
-Engine::Engine() : isRunning(true), audioSystem(nullptr) 
+Engine::Engine() : isRunning(true), audioSystem(nullptr), audioClock(nullptr)
 {
     SetTraceLogLevel(LOG_NONE);
     spdlog::info("Booting Note Hero...");
@@ -21,6 +22,10 @@ Engine::Engine() : isRunning(true), audioSystem(nullptr)
     else {
         spdlog::error("FMOD failed to initialize!");
     }
+
+    audioClock = std::make_shared<AudioClock>(audioSystem);
+    
+    inputManager = std::make_unique<InputManager>(this);
 
     rlImGuiSetup(true);
 

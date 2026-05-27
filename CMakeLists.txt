@@ -17,7 +17,7 @@ FetchContent_MakeAvailable(raylib)
 
 FetchContent_Declare(spdlog 
     GIT_REPOSITORY https://github.com/gabime/spdlog.git 
-    GIT_TAG v1.12.0
+    GIT_TAG v1.14.1
 )
 FetchContent_MakeAvailable(spdlog)
 
@@ -69,9 +69,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 
 if (MSVC)
     set(FMOD_LIB "${CMAKE_CURRENT_SOURCE_DIR}/external/fmod/lib/x64/fmod_vc.lib")
-    set(FMOD_DLL "${CMAKE_CURRENT_SOURCE_DIR}/external/fmod/lib/x64/fmod.dll")
-elseif (MINGW)
-    set(FMOD_LIB "${CMAKE_CURRENT_SOURCE_DIR}/external/fmod/lib/x64/libfmod.a") 
     set(FMOD_DLL "${CMAKE_CURRENT_SOURCE_DIR}/external/fmod/lib/x64/fmod.dll")
 endif()
 
